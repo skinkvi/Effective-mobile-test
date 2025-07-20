@@ -34,17 +34,17 @@ type CreateSubscriptionRequest struct {
 	EndDate     *string   `json:"end_date" example:"08-2025"`
 }
 
-// / @Summary Create a new subscription
+// @Summary		Создание подписки
 //
-//	@Description	Create a new subscription
-//	@Tags			subscriptions
-//	@Accept			json
-//	@Produce		json
-//	@Param			subscription	body		CreateSubscriptionRequest	true	"Subscription to create"
-//	@Success		201				{object}	map[string]int				"id"
-//	@Failure		400				{object}	map[string]string			"error"
-//	@Failure		500				{object}	map[string]string			"error"
-//	@Router			/subscriptions [post]
+// @Description	Создание новой подписки
+// @Tags			Подписки
+// @Accept			json
+// @Produce		json
+// @Param			subscription	body		CreateSubscriptionRequest	true	"Подписка для создания"
+// @Success		201				{object}	map[string]int				"id"
+// @Failure		400				{object}	map[string]string			"ошибка"
+// @Failure		500				{object}	map[string]string			"ошибка"
+// @Router			/subscriptions [post]
 func (h *SubscriptionHandler) CreateSubscription(c *gin.Context) {
 	var subReq CreateSubscriptionRequest
 
@@ -100,17 +100,16 @@ func (h *SubscriptionHandler) CreateSubscription(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 }
 
-// / @Summary Get a subscription by ID
+// @Summary		Получение подписки по ID
 //
-//	@Description	Get a subscription by ID
-//	@Tags			subscriptions
-//	@Produce		json
-//	@Param			id	path		int	true	"Subscription ID"
-//	@Success		200	{object}	postgres.Subscription
-//	@Failure		400	{object}	map[string]string	"error"
-//	@Failure		404	{object}	map[string]string	"error"
-//	@Router			/subscriptions/{id} [get]
-
+// @Description	Получение подписки по ID
+// @Tags			Подписки
+// @Produce		json
+// @Param			id	path		int	true	"ID подписки"
+// @Success		200	{object}	postgres.Subscription
+// @Failure		400	{object}	map[string]string	"ошибка"
+// @Failure		404	{object}	map[string]string	"ошибка"
+// @Router			/subscriptions/{id} [get]
 func (h *SubscriptionHandler) GetSubscription(c *gin.Context) {
 	idParam := c.Param("id")
 	h.logger.Info("GetSubscription request", zap.String("id", idParam))
@@ -152,19 +151,19 @@ func (h *SubscriptionHandler) GetSubscription(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// / @Summary Update a subscription
-//	@Description	Update a subscription
-//	@Tags			subscriptions
-//	@Accept			json
-//	@Produce		json
-//	@Param			id				path		int						true	"Subscription ID"
-//	@Param			subscription	body		postgres.Subscription	true	"Subscription to update"
-//	@Success		200				{object}	map[string]string		"message"
-//	@Failure		400				{object}	map[string]string		"error"
-//	@Failure		404				{object}	map[string]string		"error"
-//	@Failure		500				{object}	map[string]string		"error"
-//	@Router			/subscriptions/{id} [put]
-
+// @Summary		Обновление подписки
+//
+// @Description	Обновление подписки
+// @Tags			Подписки
+// @Accept			json
+// @Produce		json
+// @Param			id				path		int							true	"ID подписки"
+// @Param			subscription	body		UpdateSubscriptionRequest	true	"Подписка для обновления"
+// @Success		200				{object}	map[string]string			"сообщение"
+// @Failure		400				{object}	map[string]string			"ошибка"
+// @Failure		404				{object}	map[string]string			"ошибка"
+// @Failure		500				{object}	map[string]string			"ошибка"
+// @Router			/subscriptions/{id} [put]
 type UpdateSubscriptionRequest struct {
 	ServiceName string    `json:"service_name" example:"Yandex Plus"`
 	Price       int       `json:"price" example:"400"`
@@ -173,20 +172,19 @@ type UpdateSubscriptionRequest struct {
 	EndDate     *string   `json:"end_date" example:"08-2025"`
 }
 
-// / @Summary Update a subscription
+// @Summary		Обновление подписки
 //
-//	@Description	Update a subscription
-//	@Tags			subscriptions
-//	@Accept			json
-//	@Produce		json
-//	@Param			id				path		int							true	"Subscription ID"
-//	@Param			subscription	body		UpdateSubscriptionRequest	true	"Subscription to update"
-//	@Success		200				{object}	map[string]string			"message"
-//	@Failure		400				{object}	map[string]string			"error"
-//	@Failure		404				{object}	map[string]string			"error"
-//	@Failure		500				{object}	map[string]string			"error"
-//	@Router			/subscriptions/{id} [put]
-
+// @Description	Обновление подписки
+// @Tags			Подписки
+// @Accept			json
+// @Produce		json
+// @Param			id				path		int							true	"Subscription ID"
+// @Param			subscription	body		UpdateSubscriptionRequest	true	"Subscription to update"
+// @Success		200				{object}	map[string]string			"message"
+// @Failure		400				{object}	map[string]string			"error"
+// @Failure		404				{object}	map[string]string			"error"
+// @Failure		500				{object}	map[string]string			"error"
+// @Router			/subscriptions/{id} [put]
 func (h *SubscriptionHandler) UpdateSubscription(c *gin.Context) {
 	idParam := c.Param("id")
 	h.logger.Info("UpdateSubscription request", zap.String("id", idParam))
@@ -269,17 +267,16 @@ func (h *SubscriptionHandler) UpdateSubscription(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "subscription updated successfully"})
 }
 
-// / @Summary Delete a subscription
+// @Summary		Удаление подписки
 //
-//	@Description	Delete a subscription
-//	@Tags			subscriptions
-//	@Produce		json
-//	@Param			id	path		int					true	"Subscription ID"
-//	@Success		200	{object}	map[string]string	"message"
-//	@Failure		400	{object}	map[string]string	"error"
-//	@Failure		404	{object}	map[string]string	"error"
-//	@Router			/subscriptions/{id} [delete]
-
+// @Description	Удаление подписки
+// @Tags			Подписки
+// @Produce		json
+// @Param			id	path		int					true	"ID подписки"
+// @Success		200	{object}	map[string]string	"сообщение"
+// @Failure		400	{object}	map[string]string	"ошибка"
+// @Failure		404	{object}	map[string]string	"ошибка"
+// @Router			/subscriptions/{id} [delete]
 func (h *SubscriptionHandler) DeleteSubscription(c *gin.Context) {
 	idParam := c.Param("id")
 	h.logger.Info("DeleteSubscription request", zap.String("id", idParam))
@@ -305,17 +302,16 @@ func (h *SubscriptionHandler) DeleteSubscription(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "subscription deleted successfully"})
 }
 
-// / @Summary List subscriptions
+// @Summary		Список подписок
 //
-//	@Description	List subscriptions
-//	@Tags			subscriptions
-//	@Produce		json
-//	@Param			user_id			query		string	false	"User ID"
-//	@Param			service_name	query		string	false	"Service Name"
-//	@Success		200				{array}		postgres.Subscription
-//	@Failure		500				{object}	map[string]string	"error"
-//	@Router			/subscriptions [get]
-
+// @Description	Список подписок
+// @Tags			Подписки
+// @Produce		json
+// @Param			user_id			query		string	false	"ID пользователя"
+// @Param			service_name	query		string	false	"Название сервиса"
+// @Success		200				{array}		postgres.Subscription
+// @Failure		500				{object}	map[string]string	"ошибка"
+// @Router			/subscriptions [get]
 func (h *SubscriptionHandler) ListSubscriptions(c *gin.Context) {
 	userIDStr := c.Query("user_id")
 	serviceName := c.Query("service_name")
@@ -367,20 +363,19 @@ func (h *SubscriptionHandler) ListSubscriptions(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// / @Summary Calculate total cost of subscriptions
+// @Summary		Расчет общей стоимости подписок
 //
-//	@Description	Calculate total cost of subscriptions
-//	@Tags			subscriptions
-//	@Produce		json
-//	@Param			user_id			query		string				true	"User ID"
-//	@Param			service_name	query		string				true	"Service Name"
-//	@Param			start_date		query		string				true	"Start Date"
-//	@Param			end_date		query		string				true	"End Date"
-//	@Success		200				{object}	map[string]int		"total_cost"
-//	@Failure		400				{object}	map[string]string	"error"
-//	@Failure		500				{object}	map[string]string	"error"
-//	@Router			/subscriptions/total_cost [get]
-
+// @Description	Расчет общей стоимости подписок
+// @Tags			Подписки
+// @Produce		json
+// @Param			user_id			query		string				true	"ID пользователя"
+// @Param			service_name	query		string				true	"Название сервиса"
+// @Param			start_date		query		string				true	"Дата начала"
+// @Param			end_date		query		string				true	"Дата окончания"
+// @Success		200				{object}	map[string]int		"total_cost"
+// @Failure		400				{object}	map[string]string	"ошибка"
+// @Failure		500				{object}	map[string]string	"ошибка"
+// @Router			/subscriptions/total_cost [get]
 func (h *SubscriptionHandler) CalculateTotalCost(c *gin.Context) {
 	userIDStr := c.Query("user_id")
 	serviceName := c.Query("service_name")

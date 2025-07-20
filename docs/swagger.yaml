@@ -24,6 +24,7 @@ definitions:
     - user_id
     type: object
   handlers.UpdateSubscriptionRequest:
+    description: Обновление подписки
     properties:
       end_date:
         example: 08-2025
@@ -64,13 +65,13 @@ info:
 paths:
   /subscriptions:
     get:
-      description: List subscriptions
+      description: Список подписок
       parameters:
-      - description: User ID
+      - description: ID пользователя
         in: query
         name: user_id
         type: string
-      - description: Service Name
+      - description: Название сервиса
         in: query
         name: service_name
         type: string
@@ -84,19 +85,20 @@ paths:
               $ref: '#/definitions/postgres.Subscription'
             type: array
         "500":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
+      summary: Список подписок
       tags:
-      - subscriptions
+      - Подписки
     post:
       consumes:
       - application/json
-      description: Create a new subscription
+      description: Создание новой подписки
       parameters:
-      - description: Subscription to create
+      - description: Подписка для создания
         in: body
         name: subscription
         required: true
@@ -112,24 +114,25 @@ paths:
               type: integer
             type: object
         "400":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
         "500":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
+      summary: Создание подписки
       tags:
-      - subscriptions
+      - Подписки
   /subscriptions/{id}:
     delete:
-      description: Delete a subscription
+      description: Удаление подписки
       parameters:
-      - description: Subscription ID
+      - description: ID подписки
         in: path
         name: id
         required: true
@@ -138,29 +141,30 @@ paths:
       - application/json
       responses:
         "200":
-          description: message
+          description: сообщение
           schema:
             additionalProperties:
               type: string
             type: object
         "400":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
         "404":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
+      summary: Удаление подписки
       tags:
-      - subscriptions
+      - Подписки
     get:
-      description: Get a subscription by ID
+      description: Получение подписки по ID
       parameters:
-      - description: Subscription ID
+      - description: ID подписки
         in: path
         name: id
         required: true
@@ -173,23 +177,24 @@ paths:
           schema:
             $ref: '#/definitions/postgres.Subscription'
         "400":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
         "404":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
+      summary: Получение подписки по ID
       tags:
-      - subscriptions
+      - Подписки
     put:
       consumes:
       - application/json
-      description: Update a subscription
+      description: Обновление подписки
       parameters:
       - description: Subscription ID
         in: path
@@ -229,28 +234,29 @@ paths:
             additionalProperties:
               type: string
             type: object
+      summary: Обновление подписки
       tags:
-      - subscriptions
+      - Подписки
   /subscriptions/total_cost:
     get:
-      description: Calculate total cost of subscriptions
+      description: Расчет общей стоимости подписок
       parameters:
-      - description: User ID
+      - description: ID пользователя
         in: query
         name: user_id
         required: true
         type: string
-      - description: Service Name
+      - description: Название сервиса
         in: query
         name: service_name
         required: true
         type: string
-      - description: Start Date
+      - description: Дата начала
         in: query
         name: start_date
         required: true
         type: string
-      - description: End Date
+      - description: Дата окончания
         in: query
         name: end_date
         required: true
@@ -265,17 +271,18 @@ paths:
               type: integer
             type: object
         "400":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
         "500":
-          description: error
+          description: ошибка
           schema:
             additionalProperties:
               type: string
             type: object
+      summary: Расчет общей стоимости подписок
       tags:
-      - subscriptions
+      - Подписки
 swagger: "2.0"

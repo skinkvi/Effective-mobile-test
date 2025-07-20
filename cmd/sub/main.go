@@ -6,6 +6,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/gin-gonic/gin"
 	"github.com/jackc/tern/v2/migrate"
 	"github.com/skinkvi/effective_mobile/api/router"
 	"github.com/skinkvi/effective_mobile/api/routes"
@@ -21,8 +22,8 @@ import (
 // @version	1.0
 // @host		localhost:8080
 // @BasePath	/api
-
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	cfg := config.MustLoad("./config/local.yaml")
 
 	log, err := logger.NewLogger(cfg)
@@ -76,6 +77,8 @@ func main() {
 	r := router.NewRouter(log)
 	api := r.Group("/api")
 	routes.SubscriptionRoutes(api, storage, log)
+
+	log.Info("server started")
 
 	if err := r.Run(); err != nil && err != http.ErrServerClosed {
 		log.Fatal("failed to run server", zap.Error(err))
